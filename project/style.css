@@ -1,0 +1,16 @@
+body {
+background-image: url(forest.jpg);
+background-size: 100%;
+display: flex;
+justify-content: center;
+align-content: center;
+height: 100vh;
+flex-wrap: wrap;
+}
+
+.blog {
+    width: 75%;
+    height: 75vh;
+    background-color: white;
+    border-radius: 25px;
+}
