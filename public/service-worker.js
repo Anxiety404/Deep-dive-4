@@ -1,21 +1,11 @@
-console.log('[Service Worker] File is executing');
-
-self.addEventListener('install', (event) => {
-  console.log('[Service Worker] Install event');
-});
-
-self.addEventListener('activate', (event) => {
-  console.log('[Service Worker] Activate event');
-});
-
 const CACHE_NAME = "pwa-cache-v1";
 const urlsToCache = [
     "/",
-    "/index.html",
-    "/js/script.js",
-    "/css/style.css",
-    "/circle.svg",
-    "/favicon.ico",
+    "index.html",
+    "js/script.js",
+    "css/style.css",
+    "circle.svg",
+    "favicon.ico",
 ];
 
 // Store response in cache
@@ -59,4 +49,22 @@ self.addEventListener("install", (event) => {
         return cache.addAll(urlsToCache);
     };
     event.waitUntil(preCache());
+});
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('Service worker registered:', reg.scope))
+      .catch(err => console.error('Service worker registration failed:', err));
+  });
+}
+self.addEventListener('install', event => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', event => {
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(fetch(event.request));
 });

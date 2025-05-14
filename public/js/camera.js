@@ -4,6 +4,7 @@ class Camera {
             throw new Error('Camera API not supported in this browser');
         }
         this.stream = null;
+        this.facingMode = "user"; // "user" for front, "environment" for back
     }
 
     async getStream() {
@@ -12,7 +13,7 @@ class Camera {
         }
         try {
             this.stream = await navigator.mediaDevices.getUserMedia({
-                video: true,
+                video: { facingMode: this.facingMode }
             });
             return this.stream;
         } catch (error) {
@@ -22,6 +23,12 @@ class Camera {
         }
     }
 
+    async switchCamera() {
+        this.facingMode = this.facingMode === "user" ? "environment" : "user";
+        this.stopStream();
+        return await this.getStream();
+    }
+
     stopStream() {
         if (this.stream) {
             this.stream.getTracks().forEach(track => track.stop());
@@ -29,5 +36,15 @@ class Camera {
         }
     }
 }
+
+const savePhotoButton = document.getElementById('savePhoto');
+savePhotoButton.addEventListener('click', () => {
+  const canvas = document.getElementById('photoCanvas');
+  const image = canvas.toDataURL('image/png');
+  const link = document.createElement('a');
+  link.href = image;
+  link.download = 'photo.png';
+  link.click();
+});
 
 export default Camera;
