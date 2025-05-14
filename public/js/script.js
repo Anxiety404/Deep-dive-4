@@ -1,9 +1,9 @@
 console.log('javascript loaded');
-
+import Camera from 'camera';
 // Register service worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
+        navigator.serviceWorker.register('service-worker.js')
             .then(registration => {
                 console.log('Service Worker registered with scope:', registration.scope);
             })
@@ -12,8 +12,6 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
-
-import Camera from 'camera';
 
 const camera = new Camera();
 const videoElement = document.getElementById('cameraFeed');
@@ -30,6 +28,7 @@ stopButton.addEventListener('click', () => {
     videoElement.srcObject = null;
 });
 
+
 // Get DOM elements
 const takePhotoButton = document.getElementById('takePhoto');
 const canvas = document.getElementById('photoCanvas');
@@ -43,6 +42,7 @@ takePhotoButton.addEventListener('click', () => {
     const imageData = canvas.toDataURL('image/png');
     localStorage.setItem('savedPhoto', imageData);
 });
+
 
 // Function to draw image to canvas
 const drawImage = async (imageData) => {
@@ -72,69 +72,19 @@ fetch('/api/contacts')
       const clone = profileTemplate.content.cloneNode(true);
       clone.querySelector('.name').textContent = contact.name;
       clone.querySelector('.email').textContent = contact.email;
-      clone.querySelector('.photo').src = contact.photo ?? ''; // fallback to empty if none
       profilesContainer.appendChild(clone);
     });
   })
   .catch(err => {
     console.error('Failed to load contacts:', err);
   });
+const switchButton = document.getElementById('switchCamera');
 
-const contactForm = document.getElementById('contactForm');
-
-
-contactForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-
-    const imageData = canvas.toDataURL('image/jpeg', 0.5);
-
-    await fetch('/api/contacts', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: formData.get('name'),
-            email: formData.get('email'),
-            photo: imageData
-        })
-    });
-    
-});
-
-const logbookEntriesContainer = document.getElementById('logbookEntriesContainer');
-const logEntryTemplate = document.getElementById('travelTemplate');
-
-fetch('/api/travel')
-  .then(res => res.json())
-  .then(entries => {
-    entries.forEach(entry => {
-      const clone = logEntryTemplate.content.cloneNode(true);
-      clone.querySelector('.entry-title').textContent = entry.title;
-      clone.querySelector('.entry-date').textContent = entry.date;
-      clone.querySelector('.entry-description').textContent = entry.description;
-      logbookEntriesContainer.appendChild(clone);
-    });
-  })
-  .catch(err => {
-    console.error('Failed to load logbook entries:', err);
-  });
-
-  logbookForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-
-    await fetch('/api/travel', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            date: formData.get('date'),
-            title: formData.get('title'),
-            description: formData.get('description')
-        })
-    });
-    
+switchButton.addEventListener('click', async () => {
+  try {
+    const stream = await camera.switchCamera();
+    videoElement.srcObject = stream;
+  } catch (err) {
+    console.error('Error switching camera:', err);
+  }
 });
