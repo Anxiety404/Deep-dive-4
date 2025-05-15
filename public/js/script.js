@@ -107,6 +107,7 @@ const logbookEntriesContainer = document.getElementById('logbookEntriesContainer
 const logEntryTemplate = document.getElementById('travelTemplate');
 const logbookForm = document.getElementById('logbookForm');
 
+// Load and render travel entries with delete buttons
 fetch('/api/travel')
   .then(res => res.json())
   .then(entries => {
@@ -139,6 +140,65 @@ fetch('/api/travel')
   .catch(err => {
     console.error('Failed to load logbook entries:', err);
   });
+
+// Setup the submit listener ONCE outside of the fetch loop
+logbookForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+
+  const response = await fetch('/api/travel', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      date: formData.get('date'),
+      title: formData.get('title'),
+      description: formData.get('description')
+    })
+  });
+
+  if (response.ok) {
+    // Optionally, reload entries or add the new entry to the DOM directly
+    // For example, reload:
+    logbookEntriesContainer.innerHTML = ''; // Clear existing entries
+    // Call the fetch again or write a function to do this:
+    fetch('/api/travel')
+      .then(res => res.json())
+      .then(entries => {
+        entries.forEach(entry => {
+          const clone = logEntryTemplate.content.cloneNode(true);
+
+          clone.querySelector('.entry-title').textContent = entry.title;
+          clone.querySelector('.entry-date').textContent = new Date(entry.date).toLocaleDateString();
+          clone.querySelector('.entry-description').textContent = entry.description;
+
+          const deleteButton = clone.querySelector('.delete-btn');
+          deleteButton.setAttribute('data-id', entry._id);
+
+          deleteButton.addEventListener('click', async () => {
+            const id = deleteButton.getAttribute('data-id');
+            const response = await fetch(`/api/travel/${id}`, { method: 'DELETE' });
+
+            if (response.ok) {
+              deleteButton.closest('.travel').remove();
+            } else {
+              alert('Failed to delete travel entry');
+            }
+          });
+
+          logbookEntriesContainer.appendChild(clone);
+        });
+      });
+  } else {
+    alert('Failed to add new travel entry');
+  }
+
+  // Optional: reset the form fields after submit
+  logbookForm.reset();
+});
+
 
 
 const clearButton = document.getElementById('clearForm');
