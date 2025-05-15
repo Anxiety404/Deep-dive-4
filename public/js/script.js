@@ -205,6 +205,8 @@ const clearButton = document.getElementById('clearForm');
 const dateInput = document.getElementById('entryDate');
 const titleInput = document.getElementById('entryTitle');
 const descriptionInput = document.getElementById('entryDescription');
+// const latitudeInput = document.getElementById('entryLatitude');
+// const longitudeInput = document.getElementById('entry');
 
 // Function to get today's date in YYYY-MM-DD format
 function getTodayDate() {
