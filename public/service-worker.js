@@ -8,6 +8,8 @@ self.addEventListener('activate', (event) => {
   console.log('[Service Worker] Activate event');
 });
 
+
+
 const CACHE_NAME = "pwa-cache-v1";
 const urlsToCache = [
     "/",
@@ -16,6 +18,9 @@ const urlsToCache = [
     "/css/style.css",
     "/circle.svg",
     "/favicon.ico",
+    "/js/hi.js",
+    "/leaflet/leaflet.css",
+    "/leaflet/leaflet.js",
 ];
 
 // Store response in cache

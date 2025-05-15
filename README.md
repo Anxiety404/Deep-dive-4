@@ -2,7 +2,7 @@
 A simple and responsive Progressive Web App (PWA) for documenting your travel experiences, powered by MongoDB and built with the MERN stack (minus React).
 
 # Reference Image
-![Profile-Page](img/Screenshot.png)
+![Profile-Page](/public/img/Screenshot.png)
 
 ## 🚀 Features
 - 🗺️ **Location** (Mark down, map, notes)
