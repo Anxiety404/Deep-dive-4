@@ -82,14 +82,57 @@
 
     .icon-bar {
         position: absolute;
-        display: block;
+        display: flex;
+        justify-content: space-around;
         top: 15px;
         left: 25%;
         width: 50%;
-        background-color: white;
+        /* background-color: white; */
         height: 55px;
         border-radius: 15px;
     }
+
+    .icon {
+        width: 60px;
+        height: 60px;
+
+    }
+
+    .icon-button {
+        width: 100px;
+        height: 100px;
+        background-color: white;
+        border-radius: 100%;
+        border: none;
+    }
+
+    @media screen and (max-height: 991px) {
+        .gallerie>img {
+            margin: 5px;
+            height: 15vh;
+            border-radius: 25px;
+        }
+
+        .gallerie {
+            height: 15vh;
+            padding-bottom: 15px;
+        }
+
+        .icon {
+            width: 30px;
+            height: 30px;
+
+        }
+
+        .icon-button {
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 100%;
+            border: none;
+        }
+    }
+
     @media screen and (min-width: 1024px) {
         .arrow {
             display: none;
@@ -103,9 +146,11 @@
             height: 90vh;
 
         }
-    .icon-bar {
-        display: none;
-    }
+
+        .icon-bar {
+            display: none;
+        }
+
         .header {
             display: block;
         }
@@ -132,7 +177,7 @@
 
         .gallerie>img {
             margin: 5px;
-            border-radius: 5pxt;
+            border-radius: 5px;
         }
 
         #map {
@@ -143,7 +188,10 @@
 </style>
 
 <body>
-    <div class="icon-bar"></div>
+    <div class="icon-bar">
+        <button class="icon-button"><img class="icon" src="../camera.png" alt="add picture"></button>
+        <button class="icon-button"><img class="icon" src="../free-pin-icon-48-thumb.png" alt="add location"></button>
+    </div>
     <div class="blogpage">
         <button class="arrow" id="arrow">></button>
         <div class="header" style="height: 25%;">
