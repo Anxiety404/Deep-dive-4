@@ -1,10 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 
 const app = express();
 const PORT = process.env.PORT ?? 6789;
 
+// Connect to MongoDB
 const client = new MongoClient(process.env.MONGODB_URI);
 // await client.connect();
 
@@ -35,23 +36,11 @@ app.get('/api/travel', async (req, res) => {
 
 app.post('/api/travel', async (req, res) => {
     const newText = req.body;
-    const travelCollection = client.db('pwa_demo').collection('travel');
-    const result = await travelCollection.insertOne(newText);
+    const travelCollection = client.db('pwa_demo').collection('travel')
+    const result = await collection.insert(newText);
     res.status(201).json(result);
 });
 
-app.delete('/api/travel/:id', async (req, res) => {
-    try {
-    const id = req.params.id;
-
-    const travelCollection = client.db('pwa_demo').collection('travel');
-    const result = await travelCollection.deleteOne({ _id: new ObjectId(id) });
-    res.json({deletedCount: result.deletedCount})
-    } catch (e){
-        console.error("DELETE ERROR:", e);
-        res.status(500).json({error: "Something went wrong", errorMessage: e.message})
-    }
-});
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

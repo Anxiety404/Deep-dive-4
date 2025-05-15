@@ -47,6 +47,11 @@
     <h2 class="email"></h2>
   </div>
 </template>
+<form id="contactForm">
+  <input type="text" name="name" placeholder="Name" required />
+  <input type="email" name="email" placeholder="Email" required />
+  <input type="submit" value="Add Contact" />
+</form>
 
 <button id="find-me">Show my location</button><br />
 <p id="status"></p>
@@ -62,7 +67,7 @@
     <div class="entry-date"></div>
     <h2 class="entry-title"></h2>
     <p class="entry-description"></p>
-    <button type='button' class="btn btn-lg delete-btn" data-id="">Delete</button>
+    <button type='button' class="delete-btn" data-id="">Delete</button>
   </div>
 </template>
 
