@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="hi.js" defer></script>
+    <link rel="stylesheet" href="../project/leaflet/leaflet.css" />
+    <script src="../project/leaflet/leaflet.js"></script>
+</head>
+<style>
+    body {
+        margin: 0px;
+        display: flex;
+        flex-direction: column-reverse;
+        height: 100vh;
+        overflow-x: hidden;
+        width: 100%;
+        overflow-y: hidden;
+    }
+
+
+    .blogpage {
+        width: 100%;
+        background-color: wheat;
+        height: 25vh;
+        z-index: 3;
+    }
+    .header {
+       display: none; 
+    }
+    .gallerie {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 70vh;
+        overflow-x: scroll;
+        scrollbar-color: gray wheat;
+        scrollbar-width: thin;
+    }
+
+    .gallerie>img {
+        margin: 5px;
+        height: 25vh;
+    }
+
+    #map {
+        height: 75vh; width: 100%; 
+    }
+    @media screen and (min-width: 1024px) {
+
+
+        body {
+            margin: 0px;
+            display: flex;
+            flex-direction: row;
+            overflow-y: hidden;
+            height: 90vh;
+
+        }
+        .header {
+            display: block;
+        }
+
+        .blogpage {
+            width: 35%;
+            height: 100vh;
+            background-color: wheat;
+            z-index: 3;
+            padding: 0px 15px 0px 15px
+        }
+
+        .gallerie {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 70%;
+            overflow-y: scroll;
+                    overflow-x: hidden;
+            flex-wrap: wrap;
+            scrollbar-color: gray wheat;
+            scrollbar-width: thin;
+        }
+
+        .gallerie>img {
+            margin: 5px;
+        }
+
+        #map {
+            height: 100vh;
+            width: 65%;
+        }
+    }
+</style>
+
+<body>
+<div class="blogpage">
+    <div id="marker-info" style="min-height:80px; margin-bottom:10px;"></div>
+    <button id="btn">Add location?</button>
+</div>
+<div id="marker-inputs" style="display:none;">
+    <button id="close-marker-inputs" style="float:right;">&times;</button>
+    <input type="number" id="lat" placeholder="Latitude" step="any"><br>
+    <input type="number" id="lng" placeholder="Longitude" step="any"><br>
+    <input type="text" id="marker-title" placeholder="Title"><br>
+    <input type="file" id="marker-img" accept="image/*"><br>
+    <textarea id="marker-desc" placeholder="Description"></textarea><br>
+    <button id="add-marker-btn">Add Marker</button>
+</div>
+<div id="map"></div>
+</body>
+
+</html>
