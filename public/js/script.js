@@ -112,9 +112,27 @@ fetch('/api/travel')
   .then(entries => {
     entries.forEach(entry => {
       const clone = logEntryTemplate.content.cloneNode(true);
+
       clone.querySelector('.entry-title').textContent = entry.title;
-      clone.querySelector('.entry-date').textContent = entry.date;
+      clone.querySelector('.entry-date').textContent = new Date(entry.date).toLocaleDateString();
       clone.querySelector('.entry-description').textContent = entry.description;
+
+      // Set the data-id for deletion
+      const deleteButton = clone.querySelector('.delete-btn');
+      deleteButton.setAttribute('data-id', entry._id);
+
+      // Add delete handler
+      deleteButton.addEventListener('click', async () => {
+        const id = deleteButton.getAttribute('data-id');
+        const response = await fetch(`/api/travel/${id}`, { method: 'DELETE' });
+
+        if (response.ok) {
+          deleteButton.closest('.travel').remove(); // Remove from DOM
+        } else {
+          alert('Failed to delete travel entry');
+        }
+      });
+
       logbookEntriesContainer.appendChild(clone);
     });
   })
@@ -122,23 +140,6 @@ fetch('/api/travel')
     console.error('Failed to load logbook entries:', err);
   });
 
-  logbookForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-
-    await fetch('/api/travel', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            date: formData.get('date'),
-            title: formData.get('title'),
-            description: formData.get('description')
-        })
-    });
-    
-});
 
 const clearButton = document.getElementById('clearForm');
 const dateInput = document.getElementById('entryDate');
