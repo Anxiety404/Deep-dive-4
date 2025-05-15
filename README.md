@@ -1,15 +1,14 @@
-# Travel Journey Blog app
-MongoDB, PWA Travel journal app
-
+# 🌍 Travel Journey Blog app
+A simple and responsive Progressive Web App (PWA) for documenting your travel experiences, powered by MongoDB and built with the MERN stack (minus React).
 
 # Reference Image
-
+![Profile-Page](img/Screenshot.png)
 
 ## 🚀 Features
--  **Location** (Mark down, map, )
-- 👤 **Bloggingt** (Title, Date, Description)
--  **idk** (Delete Blogs, Add blogs, Clear input)
-- 📂 **Image Uploads** (Blog & Project Images)
+- 🗺️ **Location** (Mark down, map, notes)
+- 📝 **Blogging** (Title, Date, Description)
+- ➕➖ **Entry management** (Delete Blogs, Add blogs, Clear input)
+- 📂 **Image Uploads** (Upload Blog & Project Images)
 
 ## 📌 Tech Stack
 - **Frontend:** HTML, CSS, JavaScript
