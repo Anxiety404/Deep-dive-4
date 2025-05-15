@@ -51,29 +51,30 @@
 </form>
 
 <h1>Travel Logbook</h1>
-        
+<br>
 <template id="travelTemplate">
   <div class="travel">
-    <div class="entry-date" type="date"></div>
+    <br>
+    <div class="entry-date"></div>
     <h2 class="entry-title"></h2>
-    <h2 class="entry-description"></h2>
+    <p class="entry-description"></p>
   </div>
 </template>
 
         <form id="logbookForm">
             <div class="form-group">
                 <h2 for="entryDate">Date:</h2>
-                <input type="date" id="entryDate" required>
+                <input type="date" id="entryDate" name="date" required>
             </div>
             
             <div class="form-group">
                 <label for="entryTitle">Title:</label>
-                <input type="text" id="entryTitle" placeholder="E.g., Hiking in the Alps" required>
+                <input type="text" id="entryTitle" name="title" placeholder="E.g., Hiking in the Alps" required>
             </div>
             
             <div class="form-group">
                 <label for="entryDescription">Description:</label>
-                <textarea id="entryDescription" placeholder="Share your experience, observations, and memories..." required></textarea>
+                <textarea id="entryDescription" name="description" placeholder="Share your experience, observations, and memories..." required></textarea>
             </div>
             
             <div class="actions">

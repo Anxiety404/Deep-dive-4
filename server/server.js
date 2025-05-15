@@ -36,8 +36,8 @@ app.get('/api/travel', async (req, res) => {
 
 app.post('/api/travel', async (req, res) => {
     const newText = req.body;
-    const travelCollection = client.db('pwa_demo').collection('travel')
-    const result = await collection.insert(newText);
+    const travelCollection = client.db('pwa_demo').collection('travel');
+    const result = await travelCollection.insertOne(newText);
     res.status(201).json(result);
 });
 

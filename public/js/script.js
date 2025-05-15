@@ -105,6 +105,7 @@ contactForm.addEventListener('submit', async (event) => {
 
 const logbookEntriesContainer = document.getElementById('logbookEntriesContainer');
 const logEntryTemplate = document.getElementById('travelTemplate');
+const logbookForm = document.getElementById('logbookForm');
 
 fetch('/api/travel')
   .then(res => res.json())
@@ -137,4 +138,28 @@ fetch('/api/travel')
         })
     });
     
+});
+
+const clearButton = document.getElementById('clearForm');
+const dateInput = document.getElementById('entryDate');
+const titleInput = document.getElementById('entryTitle');
+const descriptionInput = document.getElementById('entryDescription');
+
+// Function to get today's date in YYYY-MM-DD format
+function getTodayDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// Set default date on page load
+dateInput.value = getTodayDate();
+
+// Clear form on button click
+clearButton.addEventListener('click', () => {
+  titleInput.value = '';
+  descriptionInput.value = '';
+  dateInput.value = getTodayDate(); // Reset to today's date
 });
