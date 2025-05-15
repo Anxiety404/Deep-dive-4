@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#9d5df0">
+  <meta name="description" content="PWA with MongoDB Example">
+  <title>PWA MongoDB Example</title>
+
+  <!-- PWA Meta -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="circle.svg">
+  <link rel="stylesheet" href="css/style.css">
+
+
+  <script type="importmap">
+      {
+        "imports": {
+          "camera": "./js/camera.js"
+        }
+      }
+    </script>
+  <script type="module" src="js/script.js"></script>
+  <script src="js/location.js" defer></script>
+  <!-- Add this inside <head> in index.html -->
+</head>
+<body>
+  <h1>PWA Profiles Example</h1>
+<!-- Add this inside <body> in index.html -->
+
+<h2>Camera Preview</h2>
+<button id="startCamera">Start Camera</button>
+<button id="stopCamera">Stop Camera</button>
+<button id="switchCamera">Switch Camera</button>
+<video id="cameraFeed" autoplay playsinline></video>
+<button id="takePhoto">Take Photo</button>
+<button id="savePhoto">Save Photo</button>
+<canvas id="photoCanvas" width="160" height="120"></canvas>
+<!-- Add inside <body> -->
+<div id="profilesContainer"></div>
+
+<template id="profileTemplate">
+  <div class="profile">
+    <img class="photo" alt="Profile Photo" />
+    <h2 class="name"></h2>
+    <h2 class="email"></h2>
+  </div>
+</template>
+
+<h1>Travel Logbook</h1>
+<br>
+<template id="travelTemplate">
+  <div class="travel">
+    <br>
+    <div class="entry-date"></div>
+    <h2 class="entry-title"></h2>
+    <p class="entry-description"></p>
+    <button type='button' class="btn btn-lg delete-btn" data-id="">Delete</button>
+  </div>
+</template>
+
+        <form id="logbookForm">
+            <div class="form-group">
+                <h2 for="entryDate">Date:</h2>
+                <input type="date" id="entryDate" name="date" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="entryTitle">Title:</label>
+                <input type="text" id="entryTitle" name="title" placeholder="E.g., Hiking in the Alps" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="entryDescription">Description:</label>
+                <textarea id="entryDescription" name="description" placeholder="Share your experience, observations, and memories..." required></textarea>
+            </div>
+            
+            <div class="actions">
+                <button type="submit" id="saveEntry">Save Entry</button>
+                <button type="button" id="clearForm">Clear Form</button>
+            </div>
+        </form>
+<div id="logbookEntriesContainer"></div>
+
+</body>
+</html>

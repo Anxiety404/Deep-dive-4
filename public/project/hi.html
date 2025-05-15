@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="hi.js" defer></script>
+    <link rel="stylesheet" href="../project/leaflet/leaflet.css" />
+    <script src="../project/leaflet/leaflet.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="circle.svg">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<style>
+    body {
+        margin: 0px;
+        display: flex;
+        flex-direction: column-reverse;
+        height: 100vh;
+        overflow-x: hidden;
+        width: 100%;
+        overflow-y: hidden;
+    }
+
+
+    .blogpage {
+        width: 100%;
+        background: linear-gradient(to bottom, #77777700 50%, #000000 100%);
+        height: 25vh;
+        z-index: 3;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .header {
+        transition: all 0.2s ease-in-out;
+        display: none;
+    }
+
+    .gallerie {
+        transition: all 0.2s ease-in-out;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 70vh;
+        overflow-x: scroll;
+        scrollbar-color: gray wheat;
+        scrollbar-width: thin;
+    }
+
+    .gallerie>img {
+        margin: 5px;
+        height: 25vh;
+        border-radius: 25px;
+    }
+
+    #map {
+        height: 100vh;
+        width: 100%;
+        margin-bottom: -200px;
+        z-index: -3;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+        width: 60px;
+        height: 60px;
+        color: white;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        background-color: #77777700;
+        border: none;
+        font-size: 40px;
+    }
+
+    .arrow:hover {
+        color: hsla(0, 0%, 100%, 0.5);
+    }
+
+    .icon-bar {
+        position: absolute;
+        display: block;
+        top: 15px;
+        left: 25%;
+        width: 50%;
+        background-color: wheat;
+        height: 55px;
+        border-radius: 15px;
+    }
+    @media screen and (min-width: 1024px) {
+        .arrow {
+            display: none;
+        }
+
+    body {
+        margin: 0px;
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+    }
+    .icon-bar {
+        display: none;
+    }
+        .header {
+            display: block;
+        }
+
+    .blogpage, .marker-inputs {
+        width: 35vw;
+        min-width: 300px;
+        max-width: 600px;
+        height: 100vh;
+        background: wheat;
+        z-index: 3;
+        padding: 0px 15px 0px 15px;
+        box-sizing: border-box;
+    }
+
+        .gallerie {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 70%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            flex-wrap: wrap;
+            scrollbar-color: gray wheat;
+            scrollbar-width: thin;
+        }
+
+        .gallerie>img {
+            margin: 5px;
+            border-radius: 5pxt;
+        }
+    #map {
+        height: 100vh;
+        width: 100%;
+        min-width: 300px;
+        margin-bottom: 0;
+        z-index: 1;
+    }
+        #map-container {
+        flex: 1 1 0;
+        height: 100vh;
+        overflow-y: auto;
+        background: #fff;
+    }
+    }
+</style>
+<script type="module" src="./hi.js"></script>
+<body>
+    <div class="blogpage">
+        <button id="btn">Add location?</button>
+        <a href="index.html"><button id="btn2">Take your picture here!</button></a>
+        <div id="marker-info"></div>
+        <div id="marker-inputs" style="display:none;">
+            <button id="close-marker-inputs" style="float:right;">&times;</button>
+            <input type="number" id="lat" placeholder="Latitude" step="any"><br>
+            <input type="number" id="lng" placeholder="Longitude" step="any"><br>
+            <input type="text" id="marker-title" placeholder="Title"><br>
+            <input type="file" id="marker-img" accept="image/*" multiple><br>
+            <textarea id="marker-desc" placeholder="Description" rows="5" style="width:95%; resize:vertical;"></textarea><br>
+            <button id="add-marker-btn">Add Marker</button>
+        </div>
+    </div>
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+</body>
+
+</html>
