@@ -80,6 +80,16 @@
         color: hsla(0, 0%, 100%, 0.5);
     }
 
+    .icon-bar {
+        position: absolute;
+        display: block;
+        top: 15px;
+        left: 25%;
+        width: 50%;
+        background-color: white;
+        height: 55px;
+        border-radius: 15px;
+    }
     @media screen and (min-width: 1024px) {
         .arrow {
             display: none;
@@ -93,7 +103,9 @@
             height: 90vh;
 
         }
-
+    .icon-bar {
+        display: none;
+    }
         .header {
             display: block;
         }
@@ -131,6 +143,7 @@
 </style>
 
 <body>
+    <div class="icon-bar"></div>
     <div class="blogpage">
         <button class="arrow" id="arrow">></button>
         <div class="header" style="height: 25%;">
