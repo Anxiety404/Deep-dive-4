@@ -4,7 +4,7 @@ Alex zijn rating voor Senn en Jay
 
 
 Senn zijn rating voor Alex en Jay
-
-
+![jay](https://github.com/user-attachments/assets/6decb200-16fe-4d5e-b9b2-f489bb81a1a3)
+![alex](https://github.com/user-attachments/assets/aad6409a-de4b-4f30-86ea-1e517835224b)
 
 Jay zijn rating voor Alex en Senn
