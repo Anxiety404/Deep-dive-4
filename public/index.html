@@ -24,22 +24,20 @@
   <script src="js/location.js" defer></script>
   <!-- Add this inside <head> in index.html -->
 </head>
-<body>
-  <h1>PWA Profiles Example</h1>
+<body>  
+<h1>Travel Logbook</h1>
 <!-- Add this inside <body> in index.html -->
 
-<h2>Camera Preview</h2>
+<!-- <h2>Camera Preview</h2>
 <button id="startCamera">Start Camera</button>
 <button id="stopCamera">Stop Camera</button>
 <button id="switchCamera">Switch Camera</button>
 <video id="cameraFeed" autoplay playsinline></video>
 <button id="takePhoto">Take Photo</button>
-<button id="savePhoto">Save Photo</button>
-<canvas id="photoCanvas" width="160" height="120"></canvas>
+<button id="savePhoto">Save Photo</button> -->
+<!-- <canvas id="photoCanvas" width="160" height="120"></canvas> -->
 <!-- Add inside <body> -->
-<div id="profilesContainer"></div>
-
-<h1>Travel Logbook</h1>
+<!-- <div id="profilesContainer"></div> -->
 <br>
 <template id="travelTemplate">
   <div class="travel">
@@ -77,29 +75,26 @@
                 <label for="entryLongitude">Longitude:</label>
                 <input type="number" name="lng" id="lng" placeholder="Longitude" step="any" required><br>
             </div>
-            <button id="find-me">Show my location</button><br />
+            <button id="find-me">Show my location</button><br/>
 <div id="map"></div>
 <p id="status"></p>
 <a id="map-link" target="_blank"></a>
 <a id="map-link" target="_blank"></a>
-
+            <div>Add an image
+              <h2>Camera Preview</h2>
+<button id="startCamera">Start Camera</button>
+<button id="stopCamera">Stop Camera</button>
+<button id="switchCamera">Switch Camera</button>
+<video id="cameraFeed" autoplay playsinline></video>
+<button id="takePhoto">Take Photo</button>
+<button id="savePhoto">Save Photo</button>
+            <canvas id="photoCanvas" width="160" height="120"></canvas>
+            </div>
             <div class="actions">
                 <button type="submit" id="saveEntry">Save Entry</button>
                 <button type="button" id="clearForm">Clear Form</button>
             </div>
         </form>
-<!-- <form id="marker-inputs" style="display:none;">
-  <button type="button" id="close-marker-inputs" style="float:right;">&times;</button>
-  <input type="number" name="lat" id="lat" placeholder="Latitude" step="any" required><br>
-  <input type="number" name="lng" id="lng" placeholder="Longitude" step="any" required><br>
-  <input type="text" name="title" id="marker-title" placeholder="Title" required><br>
-  <input type="file" name="img" id="marker-img" accept="image/*"><br>
-  <textarea name="description" id="marker-desc" placeholder="Description" required></textarea><br>
-  <input type="date" name="date" id="marker-date" required><br>
-  <button type="submit" id="add-marker-btn">Add Marker</button>
-</form> -->
-
-
 
 <div id="logbookEntriesContainer"></div>
 
