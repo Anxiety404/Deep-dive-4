@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <meta name="theme-color" content="#9d5df0">
+  <meta name="description" content="PWA with MongoDB Example">
+  <title>PWA MongoDB Example</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="circle.svg">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-
 <body>
- <div class="blog"></div>
-</body>
+  <h1>Write your journey!</h1>
 
+<h2>Camera</h2>
+<button id="startCamera">Start Camera</button>
+<button id="stopCamera">Stop Camera</button>
+<button id="savePhoto">Save Photo</button>
+<button id="switchCamera">Switch Camera</button>
+<video id="cameraFeed" autoplay playsinline></video>
+
+<button id="takePhoto">Take Photo</button>
+<canvas id="photoCanvas" width="160" height="120"></canvas>
+  <div id="profilesContainer"></div>
+
+<template id="profileTemplate">
+  <div class="profile">
+    <h2 class="name"></h2>
+    <h2 class="email"></h2>
+  </div>
+</template>
+<button id="back-to-map-btn">Back to map!</button>
+
+<script src="../js/camera.js"></script>
+<script type="module" src="../js/script.js"></script>
+</body>
 </html>

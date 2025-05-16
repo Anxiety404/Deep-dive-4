@@ -15,7 +15,7 @@ flex-wrap: wrap;
     border-radius: 25px;
 }
 
-#btn {
+#btn, #btn2, .back-to-map-button {
     margin-top: 10px;
     float: right;
     font-size: 1.5rem;

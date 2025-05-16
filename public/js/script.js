@@ -28,35 +28,28 @@ stopButton.addEventListener('click', () => {
     videoElement.srcObject = null;
 });
 
-
-// Get DOM elements
 const takePhotoButton = document.getElementById('takePhoto');
 const canvas = document.getElementById('photoCanvas');
 const context = canvas.getContext('2d');
 
-// Capture and store image
 takePhotoButton.addEventListener('click', () => {
     context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
-    // Save canvas content as image in localStorage
     const imageData = canvas.toDataURL('image/png');
     localStorage.setItem('savedPhoto', imageData);
 });
 
-
-// Function to draw image to canvas
 const drawImage = async (imageData) => {
     try {
         const img = new Image();
         img.src = imageData;
-        await img.decode(); // Waits for the image to be decoded
+        await img.decode(); 
         context.drawImage(img, 0, 0, canvas.width, canvas.height);
     } catch (err) {
         console.error("Error decoding or drawing image:", err);
     }
 };
 
-// On page load, restore image if available
 const savedImage = localStorage.getItem('savedPhoto');
 if (savedImage) {
     drawImage(savedImage);
@@ -87,4 +80,8 @@ switchButton.addEventListener('click', async () => {
   } catch (err) {
     console.error('Error switching camera:', err);
   }
+});
+
+document.getElementById('back-to-map-btn').addEventListener('click', function() {
+    window.location.href = 'hi.html';
 });
