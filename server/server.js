@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { MongoClient } from 'mongodb';
+import { ObjectId } from 'mongodb';
 
 const app = express();
 const PORT = process.env.PORT ?? 6789;
@@ -13,20 +14,6 @@ app.use(cors());
 app.use(express.json());
 // app.use(express.urlencoded({ extended: true }));
 app.use(express.static('../public'));
-
-// Provide contacts through the API
-app.get('/api/contacts', async (req, res) => {
-    const collection = client.db('pwa_demo').collection('contacts')
-    const contacts = await collection.find({}).toArray();
-    res.json(contacts);
-});
-
-app.post('/api/contacts', async (req, res) => {
-    const newContact = req.body;
-    const collection = client.db('pwa_demo').collection('contacts')
-    const result = await collection.insertOne(newContact);
-    res.status(201).json(result);
-});
 
 app.get('/api/travel', async (req, res) => {
     const travelCollection = client.db('pwa_demo').collection('travel');
@@ -47,3 +34,13 @@ app.listen(PORT, () => {
 });
 
 
+app.delete('/api/travel/:id', async (req, res) => {
+  const { id } = req.params;
+  const travelCollection = client.db('pwa_demo').collection('travel');
+  const result = await travelCollection.deleteOne({ _id: new ObjectId(id) });
+  if (result.deletedCount === 1) {
+    res.sendStatus(204);
+  } else {
+    res.status(404).json({ error: 'Not found' });
+  }
+});

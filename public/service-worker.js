@@ -16,11 +16,8 @@ const urlsToCache = [
     "/index.html",
     "/js/script.js",
     "/css/style.css",
-    "/circle.svg",
     "/favicon.ico",
     "/js/hi.js",
-    "/leaflet/leaflet.css",
-    "/leaflet/leaflet.js",
 ];
 
 // Store response in cache

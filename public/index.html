@@ -10,7 +10,6 @@
   <!-- PWA Meta -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="apple-touch-icon" href="circle.svg">
   <link rel="stylesheet" href="css/style.css">
 
 
@@ -42,26 +41,6 @@
 <canvas id="photoCanvas" width="160" height="120"></canvas>
 <!-- Add inside <body> -->
 <div id="profilesContainer"></div>
-
-<template id="profileTemplate">
-  <div class="profile">
-    <img class="photo" alt="Profile Photo" />
-    <h2 class="name"></h2>
-    <h2 class="email"></h2>
-  </div>
-</template>
-<form id="contactForm">
-  <input type="text" name="name" placeholder="Name" required />
-  <input type="email" name="email" placeholder="Email" required />
-  <input type="submit" value="Add Contact" />
-</form>
-
-<button id="find-me">Show my location</button><br />
-<div id="map"></div>
-<p id="status"></p>
-<a id="map-link" target="_blank"></a>
-...
-<a id="map-link" target="_blank"></a>
 
 <h1>Travel Logbook</h1>
 <br>
@@ -100,6 +79,11 @@
                 <label for="entryLongitude">Longitude:</label>
                 <input type="number" name="lng" id="lng" placeholder="Longitude" step="any" required><br>
             </div>
+            <button id="find-me">Show my location</button><br />
+<div id="map"></div>
+<p id="status"></p>
+<a id="map-link" target="_blank"></a>
+<a id="map-link" target="_blank"></a>
 
             <div class="actions">
                 <button type="submit" id="saveEntry">Save Entry</button>

@@ -62,167 +62,151 @@ if (savedImage) {
     drawImage(savedImage);
 }
 
-const profilesContainer = document.getElementById('profilesContainer');
-const profileTemplate = document.getElementById('profileTemplate');
-
-fetch('/api/contacts')
-  .then(res => res.json())
-  .then(contacts => {
-    contacts.forEach(contact => {
-      const clone = profileTemplate.content.cloneNode(true);
-      clone.querySelector('.name').textContent = contact.name;
-      clone.querySelector('.email').textContent = contact.email;
-      clone.querySelector('.photo').src = contact.photo ?? ''; // fallback to empty if none
-      profilesContainer.appendChild(clone);
-    });
-  })
-  .catch(err => {
-    console.error('Failed to load contacts:', err);
-  });
-
-const contactForm = document.getElementById('contactForm');
-
-
-contactForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-
-    const imageData = canvas.toDataURL('image/jpeg', 0.5);
-
-    await fetch('/api/contacts', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: formData.get('name'),
-            email: formData.get('email'),
-            photo: imageData
-        })
-    });
-    
-});
+// script.js
 
 const logbookEntriesContainer = document.getElementById('logbookEntriesContainer');
-const logEntryTemplate = document.getElementById('travelTemplate');
-const logbookForm = document.getElementById('logbookForm');
+const logEntryTemplate        = document.getElementById('travelTemplate');
+const logbookForm            = document.getElementById('logbookForm');
 
-// Load and render travel entries with delete buttons
-fetch('/api/travel')
-  .then(res => res.json())
-  .then(entries => {
-    entries.forEach(entry => {
-      const clone = logEntryTemplate.content.cloneNode(true);
+// **match your HTML IDs**
+const latitudeInput  = document.getElementById('lat');
+const longitudeInput = document.getElementById('lng');
 
-      clone.querySelector('.entry-title').textContent = entry.title;
-      clone.querySelector('.entry-date').textContent = new Date(entry.date).toLocaleDateString();
-      clone.querySelector('.entry-description').textContent = entry.description;
-
-      // Set the data-id for deletion
-      const deleteButton = clone.querySelector('.delete-btn');
-      deleteButton.setAttribute('data-id', entry._id);
-
-      // Add delete handler
-      deleteButton.addEventListener('click', async () => {
-        const id = deleteButton.getAttribute('data-id');
-        const response = await fetch(`/api/travel/${id}`, { method: 'DELETE' });
-
-        if (response.ok) {
-          deleteButton.closest('.travel').remove(); // Remove from DOM
-        } else {
-          alert('Failed to delete travel entry');
-        }
-      });
-
-      logbookEntriesContainer.appendChild(clone);
-    });
-  })
-  .catch(err => {
-    console.error('Failed to load logbook entries:', err);
-  });
-
-// Setup the submit listener ONCE outside of the fetch loop
-logbookForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-
-  const formData = new FormData(event.target);
-
-  const response = await fetch('/api/travel', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      date: formData.get('date'),
-      title: formData.get('title'),
-      description: formData.get('description')
-    })
-  });
-
-  if (response.ok) {
-    // Optionally, reload entries or add the new entry to the DOM directly
-    // For example, reload:
-    logbookEntriesContainer.innerHTML = ''; // Clear existing entries
-    // Call the fetch again or write a function to do this:
-    fetch('/api/travel')
-      .then(res => res.json())
-      .then(entries => {
-        entries.forEach(entry => {
-          const clone = logEntryTemplate.content.cloneNode(true);
-
-          clone.querySelector('.entry-title').textContent = entry.title;
-          clone.querySelector('.entry-date').textContent = new Date(entry.date).toLocaleDateString();
-          clone.querySelector('.entry-description').textContent = entry.description;
-
-          const deleteButton = clone.querySelector('.delete-btn');
-          deleteButton.setAttribute('data-id', entry._id);
-
-          deleteButton.addEventListener('click', async () => {
-            const id = deleteButton.getAttribute('data-id');
-            const response = await fetch(`/api/travel/${id}`, { method: 'DELETE' });
-
-            if (response.ok) {
-              deleteButton.closest('.travel').remove();
-            } else {
-              alert('Failed to delete travel entry');
-            }
-          });
-
-          logbookEntriesContainer.appendChild(clone);
-        });
-      });
-  } else {
-    alert('Failed to add new travel entry');
-  }
-
-  // Optional: reset the form fields after submit
-  logbookForm.reset();
-});
-
-
-
-const clearButton = document.getElementById('clearForm');
-const dateInput = document.getElementById('entryDate');
-const titleInput = document.getElementById('entryTitle');
+const clearButton    = document.getElementById('clearForm');
+const dateInput      = document.getElementById('entryDate');
+const titleInput     = document.getElementById('entryTitle');
 const descriptionInput = document.getElementById('entryDescription');
-// const latitudeInput = document.getElementById('entryLatitude');
-// const longitudeInput = document.getElementById('entry');
 
-// Function to get today's date in YYYY-MM-DD format
-function getTodayDate() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+const findMeButton   = document.getElementById('find-me');
+const statusEl       = document.getElementById('status');
+const mapLink        = document.getElementById('map-link');
+
+// 1) Render stored entries
+async function loadEntries() {
+  logbookEntriesContainer.innerHTML = '';
+  const res     = await fetch('/api/travel');
+  const entries = await res.json();
+
+  entries.forEach(entry => {
+    const clone = logEntryTemplate.content.cloneNode(true);
+    clone.querySelector('.entry-title').textContent       = entry.title;
+    clone.querySelector('.entry-date').textContent        = new Date(entry.date).toLocaleDateString();
+    clone.querySelector('.entry-description').textContent = entry.description;
+
+    if (entry.latitude != null && entry.longitude != null) {
+      const coordEl = document.createElement('p');
+      coordEl.classList.add('entry-coords');
+      coordEl.textContent = `📍 ${entry.latitude.toFixed(5)}, ${entry.longitude.toFixed(5)}`;
+      clone.querySelector('.entry-description').after(coordEl);
+    }
+
+    const deleteButton = clone.querySelector('.delete-btn');
+    deleteButton.setAttribute('data-id', entry._id);
+    deleteButton.addEventListener('click', async () => {
+      const id = deleteButton.dataset.id;
+      const del = await fetch(`/api/travel/${id}`, { method: 'DELETE' });
+      if (del.ok) clone.querySelector('.travel').remove();
+      else alert('Failed to delete travel entry');
+    });
+
+    logbookEntriesContainer.appendChild(clone);
+  });
 }
 
-// Set default date on page load
-dateInput.value = getTodayDate();
+// 2) “Show my location” button populates the lat/lng inputs
+function geoFindMe() {
+  statusEl.textContent = 'Locating…';
+  mapLink.href = '';
+  mapLink.textContent = '';
 
-// Clear form on button click
-clearButton.addEventListener('click', () => {
-  titleInput.value = '';
-  descriptionInput.value = '';
-  dateInput.value = getTodayDate(); // Reset to today's date
+  if (!navigator.geolocation) {
+    statusEl.textContent = 'Geolocation not supported';
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(pos => {
+    const { latitude, longitude } = pos.coords;
+    statusEl.textContent = '';
+    mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
+    mapLink.textContent = `Latitude: ${latitude.toFixed(5)}°, Longitude: ${longitude.toFixed(5)}°`;
+
+    // *** write into YOUR form inputs ***
+    latitudeInput.value  = latitude;
+    longitudeInput.value = longitude;
+  }, () => {
+    statusEl.textContent = 'Unable to retrieve your location';
+  });
+}
+findMeButton.addEventListener('click', geoFindMe);
+
+// 3) Submit handler
+logbookForm.addEventListener('submit', event => {
+  event.preventDefault();
+
+  // grab them by the correct name/id
+  const formData = new FormData(logbookForm);
+  const payload = {
+    date:        formData.get('date'),
+    title:       formData.get('title'),
+    description: formData.get('description'),
+    latitude:    parseFloat(formData.get('lat')) || null,
+    longitude:   parseFloat(formData.get('lng')) || null
+  };
+
+  // If the user never clicked “Show my location” (fields blank),
+  // try geolocation again one last time before sending.
+  const needGeo = payload.latitude === null || payload.longitude === null;
+
+  const doPost = async () => {
+    const res = await fetch('/api/travel', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    });
+    if (res.ok) {
+      logbookForm.reset();
+      dateInput.value = getTodayDate();
+      loadEntries();
+    } else {
+      alert('Failed to add new travel entry');
+    }
+  };
+
+  if (needGeo) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      payload.latitude  = pos.coords.latitude;
+      payload.longitude = pos.coords.longitude;
+      latitudeInput.value  = payload.latitude;
+      longitudeInput.value = payload.longitude;
+      doPost();
+    }, () => {
+      // still post whatever you've got (even nulls)
+      doPost();
+    });
+  } else {
+    doPost();
+  }
 });
+
+// 4) Helpers & clear form
+function getTodayDate() {
+  const t = new Date();
+  return [ t.getFullYear(),
+           String(t.getMonth()+1).padStart(2,'0'),
+           String(t.getDate()).padStart(2,'0') ].join('-');
+}
+
+dateInput.value = getTodayDate();
+clearButton.addEventListener('click', () => {
+  titleInput.value        = '';
+  descriptionInput.value  = '';
+  dateInput.value         = getTodayDate();
+  latitudeInput.value     = '';
+  longitudeInput.value    = '';
+  statusEl.textContent    = '';
+  mapLink.href            = '';
+  mapLink.textContent     = '';
+});
+
+// initial load
+loadEntries().catch(err => console.error('Failed to load entries:', err));
