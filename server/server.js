@@ -12,7 +12,7 @@ const client = new MongoClient(process.env.MONGODB_URI);
 
 app.use(cors());
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+// app.use(express.ur ncoded({ extended: true }));
 app.use(express.static('../public'));
 
 app.get('/api/travel', async (req, res) => {
@@ -24,7 +24,7 @@ app.get('/api/travel', async (req, res) => {
 app.post('/api/travel', async (req, res) => {
     const newText = req.body;
     const travelCollection = client.db('pwa_demo').collection('travel')
-    const result = await collection.insert(newText);
+    const result = await travelCollection.insertOne(newText);
     res.status(201).json(result);
 });
 

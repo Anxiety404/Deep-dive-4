@@ -17,7 +17,6 @@ const urlsToCache = [
     "/js/script.js",
     "/css/style.css",
     "/favicon.ico",
-    "/js/hi.js",
 ];
 
 // Store response in cache

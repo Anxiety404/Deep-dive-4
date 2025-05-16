@@ -93,6 +93,12 @@ async function loadEntries() {
     clone.querySelector('.entry-date').textContent        = new Date(entry.date).toLocaleDateString();
     clone.querySelector('.entry-description').textContent = entry.description;
 
+    const imgEl = clone.querySelector('.entry-photo');
+  if (entry.image) {
+    imgEl.src           = entry.image;      // your base64 data URL
+    imgEl.style.display = 'block';          // make it visible
+  }
+
     if (entry.latitude != null && entry.longitude != null) {
       const coordEl = document.createElement('p');
       coordEl.classList.add('entry-coords');
@@ -150,7 +156,8 @@ logbookForm.addEventListener('submit', event => {
     title:       formData.get('title'),
     description: formData.get('description'),
     latitude:    parseFloat(formData.get('lat')) || null,
-    longitude:   parseFloat(formData.get('lng')) || null
+    longitude:   parseFloat(formData.get('lng')) || null,
+     image:       localStorage.getItem('savedPhoto')
   };
 
   // If the user never clicked “Show my location” (fields blank),
