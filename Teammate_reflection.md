@@ -17,3 +17,12 @@ Jay zijn rating voor Alex en Senn
 
 
 ![image](https://github.com/user-attachments/assets/0c857d3b-0bdc-4cc4-bd68-f51fe0f11b89)
+
+dingen die goed waren
+1. mongo db server
+2. de map
+
+dingen die beter konden
+1. de teamwork kon beter
+2. taken verdeling kon beter
+3. midden grond vinden
